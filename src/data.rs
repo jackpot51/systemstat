@@ -316,6 +316,15 @@ pub struct PlatformMemory {
     pub meminfo: BTreeMap<String, ByteSize>,
 }
 
+#[cfg(target_os = "redox")]
+#[cfg_attr(
+    feature = "serde",
+    derive(Serialize, Deserialize),
+    serde(crate = "the_serde")
+)]
+#[derive(Debug, Clone)]
+pub struct PlatformMemory;
+
 #[cfg_attr(
     feature = "serde",
     derive(Serialize, Deserialize),
@@ -335,7 +344,8 @@ pub struct Memory {
     target_os = "openbsd",
     target_os = "netbsd",
     target_os = "illumos",
-    target_os = "solaris"
+    target_os = "solaris",
+    target_os = "redox"
 ))]
 pub type PlatformSwap = PlatformMemory;
 

@@ -7,7 +7,7 @@ pub mod windows;
 #[cfg(windows)]
 pub use self::windows::PlatformImpl;
 
-#[cfg(unix)]
+#[cfg(all(unix, not(target_os = "redox")))]
 pub mod unix;
 
 #[cfg(any(
@@ -47,6 +47,11 @@ pub use self::linux::PlatformImpl;
 pub mod illumos;
 #[cfg(any(target_os = "illumos", target_os = "solaris"))]
 pub use self::illumos::PlatformImpl;
+
+#[cfg(target_os = "redox")]
+pub mod redox;
+#[cfg(target_os = "redox")]
+pub use self::redox::PlatformImpl;
 
 #[cfg(test)]
 mod tests {
